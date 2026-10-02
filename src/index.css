@@ -1,0 +1,938 @@
+@import "tailwindcss";
+
+/* =========================================================
+   GRUNER — OFFICIAL BRAND SYSTEM
+========================================================= */
+
+@theme {
+  /* Primary */
+  --color-gruner-white: #ffffff;
+  --color-gruner-charcoal: #373a36;
+  --color-gruner: #009739;
+  --color-gruner-gray: #97999b;
+
+  /* Secondary */
+  --color-gruner-mint: #26d07c;
+  --color-gruner-dark: #046a38;
+  --color-gruner-gray-light: #c8c9c7;
+  --color-gruner-black: #2d2926;
+
+  /* Tertiary */
+  --color-gruner-yellow: #ffc72c;
+  --color-gruner-orange: #ff7f41;
+  --color-gruner-blue: #009cde;
+  --color-gruner-purple: #6738ab;
+}
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* =======================================================
+     OFFICIAL GRUNER COLORS
+  ======================================================= */
+
+  --gruner-white: #ffffff;
+
+  /* Primary */
+
+  --gruner-charcoal: #373a36;
+  --gruner-green: #009739;
+  --gruner-gray: #97999b;
+
+  /* Secondary */
+
+  --gruner-mint: #26d07c;
+  --gruner-green-dark: #046a38;
+  --gruner-gray-light: #c8c9c7;
+  --gruner-black: #2d2926;
+
+  /* Tertiary */
+
+  --gruner-yellow: #ffc72c;
+  --gruner-orange: #ff7f41;
+  --gruner-blue: #009cde;
+  --gruner-purple: #6738ab;
+
+  /* =======================================================
+     SEMANTIC TOKENS
+  ======================================================= */
+
+  --color-brand: var(--gruner-green);
+  --color-brand-dark: var(--gruner-green-dark);
+  --color-brand-soft: var(--gruner-mint);
+
+  --color-heading: var(--gruner-charcoal);
+  --color-text: var(--gruner-charcoal);
+  --color-text-muted: #6f7470;
+  --color-text-soft: var(--gruner-gray);
+
+  --color-page: #f7f8f5;
+  --color-surface: var(--gruner-white);
+  --color-surface-soft: #f1f2ef;
+
+  --color-border: rgba(55, 58, 54, 0.12);
+  --color-border-strong: rgba(55, 58, 54, 0.2);
+
+  --color-dark: var(--gruner-charcoal);
+  --color-dark-green: var(--gruner-green-dark);
+
+  color: var(--color-text);
+  background: var(--color-page);
+}
+
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+
+  margin: 0;
+
+  background: var(--color-page);
+  color: var(--color-text);
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* =========================================================
+   GRUNER — PREMIUM MAP
+========================================================= */
+
+.gruner-map {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  min-height: 540px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(55, 58, 54, 0.1);
+  border-radius: 28px;
+
+  background: #e3e6e1;
+
+  box-shadow:
+    0 28px 70px rgba(55, 58, 54, 0.08),
+    0 4px 12px rgba(55, 58, 54, 0.035);
+}
+
+/* =========================================================
+   LEAFLET CONTAINER
+========================================================= */
+
+.gruner-map__canvas {
+  position: absolute !important;
+
+  inset: 0;
+
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 540px;
+
+  z-index: 1;
+
+  background: #e8ebe6;
+}
+
+/*
+ * Tailwind / reset global puede interferir
+ * con las imágenes de los tiles de Leaflet.
+ */
+.gruner-map .leaflet-container img,
+.gruner-map .leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+/* =========================================================
+   MAP VISUAL TREATMENT
+========================================================= */
+
+.gruner-map .leaflet-tile-pane {
+  filter: saturate(0.68) contrast(0.97) brightness(1.03);
+}
+
+/*
+ * Película muy ligera para integrar el mapa
+ * con el sistema visual de GRUNER.
+ */
+.gruner-map::after {
+  content: "";
+
+  position: absolute;
+  z-index: 300;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    180deg,
+    rgba(247, 248, 245, 0.01),
+    rgba(247, 248, 245, 0.05)
+  );
+}
+
+/* =========================================================
+   LEAFLET PANES
+========================================================= */
+
+.gruner-map .leaflet-map-pane,
+.gruner-map .leaflet-tile-pane,
+.gruner-map .leaflet-overlay-pane,
+.gruner-map .leaflet-shadow-pane,
+.gruner-map .leaflet-marker-pane,
+.gruner-map .leaflet-tooltip-pane,
+.gruner-map .leaflet-popup-pane {
+  position: absolute;
+}
+
+/* =========================================================
+   ZOOM CONTROLS
+========================================================= */
+
+.gruner-map .leaflet-top.leaflet-right {
+  top: 14px;
+  right: 14px;
+}
+
+.gruner-map .leaflet-control-zoom {
+  margin: 0 !important;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(55, 58, 54, 0.1) !important;
+  border-radius: 14px !important;
+
+  box-shadow: 0 12px 30px rgba(55, 58, 54, 0.12) !important;
+}
+
+.gruner-map .leaflet-control-zoom a {
+  display: flex !important;
+
+  width: 39px !important;
+  height: 39px !important;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 0 !important;
+
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: var(--gruner-charcoal) !important;
+
+  font-size: 18px !important;
+  font-weight: 400 !important;
+
+  text-decoration: none !important;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.gruner-map .leaflet-control-zoom-in {
+  border-bottom: 1px solid rgba(55, 58, 54, 0.08) !important;
+}
+
+.gruner-map .leaflet-control-zoom a:hover {
+  background: var(--gruner-green-dark) !important;
+  color: var(--gruner-white) !important;
+}
+
+/* =========================================================
+   ATTRIBUTION
+========================================================= */
+
+.gruner-map .leaflet-control-attribution {
+  margin: 0 !important;
+
+  padding: 4px 8px !important;
+
+  background: rgba(255, 255, 255, 0.82) !important;
+
+  color: rgba(55, 58, 54, 0.56) !important;
+
+  font-size: 9px !important;
+
+  backdrop-filter: blur(10px);
+}
+
+.gruner-map .leaflet-control-attribution a {
+  color: rgba(55, 58, 54, 0.74) !important;
+}
+
+/* =========================================================
+   MARKER
+========================================================= */
+
+.gruner-marker-wrapper {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.gruner-marker {
+  position: relative;
+
+  display: flex;
+
+  width: 58px;
+  height: 58px;
+
+  align-items: center;
+  justify-content: center;
+}
+
+/* PULSE */
+
+.gruner-marker-pulse {
+  position: absolute;
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 151, 57, 0.17);
+
+  animation: gruner-marker-pulse 2.5s ease-out infinite;
+}
+
+/* MAIN MARKER */
+
+.gruner-marker-pin {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+
+  width: 39px;
+  height: 39px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 4px solid rgba(255, 255, 255, 0.98);
+  border-radius: 50%;
+
+  background: var(--gruner-green-dark);
+
+  box-shadow:
+    0 14px 30px rgba(4, 106, 56, 0.3),
+    0 3px 8px rgba(55, 58, 54, 0.14);
+}
+
+.gruner-marker-dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: var(--gruner-green);
+
+  box-shadow: 0 0 0 4px rgba(0, 151, 57, 0.14);
+}
+
+@keyframes gruner-marker-pulse {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.55);
+  }
+
+  72% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+/* =========================================================
+   TOP GRUNER CHIP
+========================================================= */
+
+.gruner-map__brand {
+  position: absolute;
+  z-index: 600;
+
+  top: 20px;
+  left: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.93);
+
+  box-shadow: 0 14px 38px rgba(55, 58, 54, 0.1);
+
+  backdrop-filter: blur(16px);
+
+  pointer-events: none;
+}
+
+.gruner-map__brand-dot {
+  width: 9px;
+  height: 9px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--gruner-green);
+
+  box-shadow: 0 0 0 4px rgba(0, 151, 57, 0.12);
+}
+
+.gruner-map__brand-name {
+  margin: 0;
+
+  color: var(--gruner-charcoal);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.01em;
+}
+
+.gruner-map__brand-city {
+  margin: 2px 0 0;
+
+  color: #727773;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   BOTTOM FLOATING PANEL
+========================================================= */
+
+.gruner-map__bottom {
+  position: absolute;
+  z-index: 600;
+
+  right: 18px;
+  bottom: 18px;
+  left: 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px 17px 16px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.93);
+
+  box-shadow: 0 18px 45px rgba(55, 58, 54, 0.12);
+
+  backdrop-filter: blur(17px);
+}
+
+.gruner-map__bottom-label {
+  margin: 0;
+
+  color: var(--gruner-gray);
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.gruner-map__bottom-title {
+  margin: 3px 0 0;
+
+  color: var(--gruner-charcoal);
+
+  font-size: 16px;
+  font-weight: 600;
+
+  letter-spacing: -0.025em;
+}
+
+.gruner-map__route {
+  display: inline-flex;
+
+  min-height: 42px;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 18px;
+
+  border-radius: 999px;
+
+  background: #f0f1ee !important;
+  color: var(--gruner-charcoal) !important;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-decoration: none !important;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.gruner-map__route:hover {
+  background: var(--gruner-green-dark) !important;
+  color: var(--gruner-white) !important;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   POPUP
+========================================================= */
+
+.gruner-popup .leaflet-popup-content-wrapper {
+  overflow: hidden;
+
+  padding: 0;
+
+  border: 1px solid rgba(55, 58, 54, 0.08);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.98);
+
+  box-shadow: 0 22px 54px rgba(55, 58, 54, 0.15);
+
+  backdrop-filter: blur(16px);
+}
+
+.gruner-popup .leaflet-popup-content {
+  width: 205px !important;
+
+  margin: 0 !important;
+}
+
+.gruner-popup .leaflet-popup-tip {
+  background: var(--gruner-white);
+}
+
+.gruner-popup__content {
+  padding: 16px;
+}
+
+.gruner-popup__head {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.gruner-popup__icon {
+  display: flex;
+
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--gruner-green-dark);
+  color: var(--gruner-white);
+}
+
+.gruner-popup__eyebrow {
+  margin: 0;
+
+  color: var(--gruner-gray);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.gruner-popup__title {
+  margin: 1px 0 0;
+
+  color: var(--gruner-charcoal);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.gruner-popup__city {
+  margin: 13px 0 0;
+
+  color: #6f7470;
+
+  font-size: 12px;
+}
+
+.gruner-popup__link {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 12px;
+  padding-top: 11px;
+
+  border-top: 1px solid rgba(55, 58, 54, 0.09);
+
+  color: var(--gruner-green-dark) !important;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-decoration: none !important;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 639px) {
+  .gruner-map,
+  .gruner-map__canvas {
+    min-height: 440px;
+  }
+
+  .gruner-map {
+    border-radius: 22px;
+  }
+
+  .gruner-map__brand {
+    top: 12px;
+    left: 12px;
+
+    padding: 9px 12px;
+  }
+
+  .gruner-map__brand-city {
+    font-size: 10px;
+  }
+
+  .gruner-map__bottom {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+
+    padding: 12px 12px 12px 14px;
+  }
+
+  .gruner-map__bottom-label {
+    display: none;
+  }
+
+  .gruner-map__bottom-title {
+    font-size: 13px;
+  }
+
+  .gruner-map__route {
+    min-height: 38px;
+
+    padding: 0 13px;
+
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .gruner-marker-pulse {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   GRUNER — PROJECT LIGHT GALLERY
+========================================================= */
+
+.lg-backdrop {
+  background: rgba(45, 41, 38, 0.985) !important;
+}
+
+.lg-outer .lg-toolbar {
+  background: linear-gradient(
+    to bottom,
+    rgba(45, 41, 38, 0.8),
+    transparent
+  ) !important;
+}
+
+.lg-outer .lg-thumb-outer {
+  background: rgba(45, 41, 38, 0.96) !important;
+}
+
+.lg-outer .lg-thumb-item {
+  border: 2px solid transparent !important;
+  border-radius: 0 !important;
+  opacity: 0.45;
+
+  transition:
+    opacity 220ms ease,
+    border-color 220ms ease;
+}
+
+.lg-outer .lg-thumb-item:hover {
+  opacity: 0.8;
+}
+
+.lg-outer .lg-thumb-item.active {
+  border-color: var(--gruner-green) !important;
+  opacity: 1;
+}
+
+.lg-outer .lg-prev,
+.lg-outer .lg-next {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px !important;
+
+  transition:
+    background 220ms ease,
+    border-color 220ms ease;
+}
+
+.lg-outer .lg-prev:hover,
+.lg-outer .lg-next:hover {
+  background: var(--gruner-green-dark) !important;
+  border-color: var(--gruner-green-dark);
+}
+
+/* =========================================================
+   PROJECT INFORMATION
+========================================================= */
+
+.lg-outer .lg-sub-html {
+  background: linear-gradient(
+    to top,
+    rgba(45, 41, 38, 0.98) 0%,
+    rgba(45, 41, 38, 0.94) 72%,
+    rgba(45, 41, 38, 0) 100%
+  ) !important;
+
+  padding: 72px 20px 24px !important;
+  text-align: left !important;
+}
+
+.gruner-project-info {
+  width: min(100%, 1500px);
+  margin-inline: auto;
+}
+
+.gruner-project-info__heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.gruner-project-info__category {
+  margin: 0 0 8px;
+
+  color: var(--gruner-mint);
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.gruner-project-info__title {
+  max-width: 900px;
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(26px, 3vw, 44px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.gruner-project-info__image-count {
+  flex-shrink: 0;
+
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.gruner-project-info__description {
+  max-width: 900px;
+
+  margin: 18px 0 0;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.gruner-project-info__details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px 24px;
+
+  margin-top: 22px;
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gruner-project-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.gruner-project-detail__label {
+  color: rgba(255, 255, 255, 0.38);
+
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.gruner-project-detail__value {
+  color: rgba(255, 255, 255, 0.86);
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 768px) {
+  .lg-outer .lg-sub-html {
+    padding: 86px 32px 28px !important;
+  }
+
+  .gruner-project-info__details {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 1024px) {
+  .lg-outer .lg-sub-html {
+    padding: 100px max(48px, calc((100vw - 1500px) / 2)) 32px !important;
+  }
+
+  .gruner-project-info__details {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 639px) {
+  .gruner-project-info__heading {
+    align-items: flex-start;
+  }
+
+  .gruner-project-info__title {
+    font-size: 26px;
+  }
+
+  .gruner-project-info__description {
+    display: -webkit-box;
+    overflow: hidden;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
